@@ -1,53 +1,75 @@
 #include <iostream>
-
 using namespace std;
 
-void displayMatrix(int matrix[][10], int size);
-void fillMatrix(int matrix[][10], int size);
-void bubbleSort(int** matrix, int size);
-void insertionSort(int** matrix, int size);
-void selectionSort(int** matrix, int size);
+const int SIZE = 10;
+
+void displayMatrix(int matrix[][SIZE]);
+void loadMatrix(int matrix[][SIZE]);
+void bubbleSort(int matrix[][SIZE]);
+void insertionSort(int matrix[][SIZE]);
+void selectionSort(int matrix[][SIZE]);
+void swap(int* val1, int* val2);
 
 int main()
 {
-    const int size = 10;
-    int matrix[size][size];
+    int matrix[SIZE][SIZE];
 
-    fillMatrix(matrix, size);
-    cout << endl;
-    displayMatrix(matrix, size);
+    cout << "Loaded matrix:" << endl << endl;
+    loadMatrix(matrix);
+    displayMatrix(matrix);
+
+    cout << "Bubble sort:" << endl << endl;
+    bubbleSort(matrix);
+    displayMatrix(matrix);
+
+    cout << "Reloaded matrix:" << endl << endl;
+    loadMatrix(matrix);
+    displayMatrix(matrix);
 }
 
-void fillMatrix(int matrix[][10], int size) {
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+void loadMatrix(int matrix[][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
             matrix[i][j] = i * j;
-            cout << matrix[i][j] << ", ";   // display value added
+        }
+    }
+}
+
+void displayMatrix(int matrix[][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            cout << matrix[i][j] << ", ";
         }
         cout << endl;
     }
+    cout << endl;
 }
 
-void displayMatrix(int matrix[][10], int size) {
-    for (int i = 0; i < size * size; i++) {
-
-        if (i % size == 0) {
-            cout << endl;
+void bubbleSort(int matrix[][SIZE]) {
+    bool swapped;
+    do {
+        swapped = false;
+        for (int i = 1; i < SIZE * SIZE; i++) {                     
+            if (*(*matrix + i - 1) > *(*matrix + i)) {                                   
+                swap(*matrix + i - 1, *matrix + i);
+                swapped = true;
+            }
         }
-        cout << *(*(matrix) + i) << ", ";
-    }
+    } while (swapped);
+    //displayMatrix(matrix);
 }
 
-void bubbleSort(int** matrix, int size) {
-
-}
-
-void insertionSort(int** matrix, int size) {
-
+void insertionSort(int matrix[][SIZE]) {
 
 }
 
-void selectionSort(int** matrix, int size) {
+void selectionSort(int matrix[][SIZE]) {
 
+}
+
+void swap(int* val1, int* val2) {
+    int temp = *val1;
+    *val1 = *val2;
+    *val2 = temp;
 }
 
