@@ -25,6 +25,11 @@ int main()
     cout << "Reloaded matrix:" << endl << endl;
     loadMatrix(matrix);
     displayMatrix(matrix);
+
+    cout << "Insertion sort:" << endl << endl;
+    insertionSort(matrix);
+    displayMatrix(matrix);
+
 }
 
 void loadMatrix(int matrix[][SIZE]) {
@@ -56,15 +61,6 @@ void bubbleSort(int matrix[][SIZE]) {
             }
         }
     } while (swapped);
-    //displayMatrix(matrix);
-}
-
-void insertionSort(int matrix[][SIZE]) {
-
-}
-
-void selectionSort(int matrix[][SIZE]) {
-
 }
 
 void swap(int* val1, int* val2) {
@@ -72,4 +68,24 @@ void swap(int* val1, int* val2) {
     *val1 = *val2;
     *val2 = temp;
 }
+
+void insertionSort(int matrix[][SIZE]) {
+    int current, j;
+    for (int i = 1; i < SIZE * SIZE; i++) {
+        current = *(*matrix + i);
+        j = i - 1;
+
+        while (j >= 0 && *(*matrix + j) > current) {
+            *(*matrix + j + 1) = *(*matrix + j);
+            j--;
+        }
+        *(*matrix + j + 1) = current;
+    }
+}
+
+void selectionSort(int matrix[][SIZE]) {
+
+}
+
+
 
