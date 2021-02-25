@@ -5,11 +5,11 @@ using std::chrono::system_clock;
 using std::chrono::steady_clock;
 using std::chrono::duration_cast;
 using std::chrono::seconds;
-using std::chrono::milliseconds;
+using std::chrono::nanoseconds;
 
 using namespace std;
 
-const int SIZE = 40;
+const int SIZE = 10;
 int matrix[SIZE][SIZE];
 
 void displayMatrix(int matrix[][SIZE]);
@@ -127,7 +127,7 @@ long TimeFunc(Func f) {
     auto begin = steady_clock::now();
     f(matrix);
     auto end = steady_clock::now();
-    return duration_cast<milliseconds>(end - begin).count();
+    return duration_cast<nanoseconds>(end - begin).count();
 }
 
 
