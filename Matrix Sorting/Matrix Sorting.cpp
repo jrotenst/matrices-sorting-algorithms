@@ -1,7 +1,16 @@
 #include <iostream>
+
+#include <chrono>
+using std::chrono::system_clock;
+using std::chrono::steady_clock;
+using std::chrono::duration_cast;
+using std::chrono::seconds;
+using std::chrono::milliseconds;
+
 using namespace std;
 
-const int SIZE = 10;
+const int SIZE = 40;
+int matrix[SIZE][SIZE];
 
 void displayMatrix(int matrix[][SIZE]);
 void loadMatrix(int matrix[][SIZE]);
@@ -10,16 +19,19 @@ void insertionSort(int matrix[][SIZE]);
 void selectionSort(int matrix[][SIZE]);
 void swap(int* val1, int* val2);
 
+template <typename Func>long
+long TimeFunc(Func f);
+
+
 int main()
 {
-    int matrix[SIZE][SIZE];
-
+    
     cout << "Loaded matrix:" << endl << endl;
     loadMatrix(matrix);
     displayMatrix(matrix);
 
     cout << "Bubble sort:" << endl << endl;
-    bubbleSort(matrix);
+    long bubbleSortTime = TimeFunc(bubbleSort);
     displayMatrix(matrix);
 
     cout << "Reloaded matrix:" << endl << endl;
@@ -27,7 +39,7 @@ int main()
     displayMatrix(matrix);
 
     cout << "Insertion sort:" << endl << endl;
-    insertionSort(matrix);
+    long insertionSortTime = TimeFunc(insertionSort);    
     displayMatrix(matrix);
 
     cout << "Reloaded matrix:" << endl << endl;
@@ -35,8 +47,14 @@ int main()
     displayMatrix(matrix);
 
     cout << "Selection sort:" << endl << endl;
-    selectionSort(matrix);
+    long selectionSortTime = TimeFunc(selectionSort);
     displayMatrix(matrix);
+
+    cout << endl << "SORT TIMES" << endl << endl;
+    cout << "Bubble Sort: " << bubbleSortTime << endl;
+    cout << "Insertion Sort: " << insertionSortTime << endl;
+    cout << "Selection Sort: " << selectionSortTime << endl;
+
 }
 
 void loadMatrix(int matrix[][SIZE]) {
@@ -102,6 +120,14 @@ void swap(int* val1, int* val2) {
     int temp = *val1;
     *val1 = *val2;
     *val2 = temp;
+}
+
+template <typename Func>long
+long TimeFunc(Func f) {
+    auto begin = steady_clock::now();
+    f(matrix);
+    auto end = steady_clock::now();
+    return duration_cast<milliseconds>(end - begin).count();
 }
 
 
